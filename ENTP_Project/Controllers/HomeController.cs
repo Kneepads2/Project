@@ -16,19 +16,21 @@ namespace ENTP_Project.Controllers
             _logger = logger;
         }
 
-        
-
         public IActionResult Login()
         {
-            var redirectUri = Url.Action("Index", "Home");  // Redirect to home after login
+            var redirectUri = Url.Action("Index", "Home"); 
             return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0");
         }
 
         public IActionResult Logout()
         {
-            var callbackUrl = Url.Action("Logout", "Home");
+            var callbackUrl = Url.Action("LoggedOut", "Home");
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                            CookieAuthenticationDefaults.AuthenticationScheme, "Auth0");
+        }
+        public IActionResult LoggedOut()
+        {
+            return View();
         }
         public IActionResult Index()
         {
