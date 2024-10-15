@@ -1,18 +1,69 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome back to back</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Body Fitness</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ENTP_Project.styles.css" asp-append-version="true" />
+    <style>
+        body,html {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            width: 100%;
+            height: 100%;
+        }
 
-@if (User.Identity.IsAuthenticated)
-{
-    <a href="/Home/Logout">Logout</a>
-}
-else
-{
-    <a href="/Home/Login">Login</a>
-}
+        .section-top {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://images.everydayhealth.com/images/healthy-living/fitness/everything-you-need-know-about-fitness-1440x810.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .content h1 {
+            color: white;
+            font-size: 60px;
+            letter-spacing: 3px;
+
+        }
+
+        .content a {
+            background: #0984e3;
+            padding: 10px 24px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 20px;
+        }
+
+        
+    </style>
+</head>
+<body>
+   <div class="section-top">
+        <div class="content">
+            <h1>Super Body Fitness</h1>
+            <a href="#">Try out now!</a>
+        </div>
+   </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Body Fitness - Custom Layout</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ENTP_Project.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-black box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Super Body Fitness</a>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="navbar-link text-bright" href="Logout" style="float:right;">Logout</a>
+                }
+                else
+                {
+                    <a class="navbar-link text-bright"  href="/Home/Login" style="float:right;">Login</a>
+                }
+                
+            </div>
+        </nav>
+    </header>
+    
+    @RenderBody()  <!-- This will render the specific page content -->
+    
+
+    
+</body>
+</html>
