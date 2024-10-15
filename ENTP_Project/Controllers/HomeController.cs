@@ -1,4 +1,7 @@
+using Auth0.AspNetCore.Authentication;
 using ENTP_Project.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,6 +16,20 @@ namespace ENTP_Project.Controllers
             _logger = logger;
         }
 
+        
+
+        public IActionResult Login()
+        {
+            var redirectUri = Url.Action("Index", "Home");  // Redirect to home after login
+            return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0");
+        }
+
+        public IActionResult Logout()
+        {
+            var callbackUrl = Url.Action("Index", "Home");
+            return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
+                           CookieAuthenticationDefaults.AuthenticationScheme, "Auth0");
+        }
         public IActionResult Index()
         {
             return View();
