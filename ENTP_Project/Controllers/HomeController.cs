@@ -26,7 +26,7 @@ namespace ENTP_Project.Controllers
 
         public IActionResult Logout()
         {
-            var callbackUrl = Url.Action("Index", "Home");
+            var callbackUrl = Url.Action("Logout", "Home");
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                            CookieAuthenticationDefaults.AuthenticationScheme, "Auth0");
         }

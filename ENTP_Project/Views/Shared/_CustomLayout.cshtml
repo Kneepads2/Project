@@ -7,12 +7,24 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ENTP_Project.styles.css" asp-append-version="true" />
+    <style>
+        .account-button {
+            background-color: azure;
+            font-weight: bold;
+            border-radius: 20px;
+            color: rgb(25,25,25);
+            padding: 10px;
+            font-size: 15px;   
+            text-decoration: none;
+        }
+
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-black box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Super Body Fitness</a>
+                <a class="navbar-brand" href="/">Super Body Fitness</a>
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -23,11 +35,11 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="navbar-link text-bright" href="Logout" style="float:right;">Logout</a>
+                    <a class="account-button navbar-link text-bright" href="/Home/Logout" style="float:right;">Logout</a>
                 }
                 else
                 {
-                    <a class="navbar-link text-bright"  href="/Home/Login" style="float:right;">Login</a>
+                    <a class="account-button navbar-link text-bright"  href="/Home/Login" style="float:right;">Login</a>
                 }
                 
             </div>
