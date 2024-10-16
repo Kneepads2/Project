@@ -14,15 +14,25 @@
             border-radius: 20px;
             color: rgb(25,25,25);
             padding: 10px;
-            font-size: 15px;   
+            font-size: 15px;
             text-decoration: none;
+            margin: 10px;
+            float: right;
         }
 
+        .navbar-brand {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .nav-item {
+            float: right;
+        }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-black box-shadow">
+        <nav style="background-color: rgb(25,25,25);" class="navbar navbar-expand-sm navbar-dark box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">Super Body Fitness</a>
                 <ul class="navbar-nav flex-grow-1">
@@ -35,20 +45,21 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="account-button navbar-link text-bright" href="/Home/Logout" style="float:right;">Logout</a>
+                    <a class="account-button navbar-link text-bright" href="/App/Homepage">Home</a>
+                    <a class="account-button navbar-link text-bright" href="/Home/Logout">Logout</a>
                 }
                 else
                 {
-                    <a class="account-button navbar-link text-bright"  href="/Home/Login" style="float:right;">Login</a>
+                    <a class="account-button navbar-link text-bright" href="/Home/Login">Login</a>
                 }
-                
+
             </div>
         </nav>
     </header>
-    
-    @RenderBody()  <!-- This will render the specific page content -->
-    
 
-    
+    @RenderBody()  <!-- This will render the specific page content -->
+
+
+
 </body>
 </html>

@@ -18,7 +18,7 @@ namespace ENTP_Project.Controllers
 
         public IActionResult Login()
         {
-            var redirectUri = Url.Action("Index", "Home"); 
+            var redirectUri = Url.Action("Homepage", "App"); 
             return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0");
         }
 

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Body Fitness - Custom Layout</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ENTP_Project.styles.css" asp-append-version="true" />
+    <style>
+        .account-button {
+            background-color: azure;
+            font-weight: bold;
+            border-radius: 20px;
+            color: rgb(25,25,25);
+            padding: 10px;
+            font-size: 15px;   
+            text-decoration: none;
+            margin: 10px;
+            float: right;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav style="background-color: rgb(25,25,25);" class="navbar navbar-expand-sm navbar-dark box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Super Body Fitness</a>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="account-button navbar-link text-bright" href="/App/Homepage">Home</a>
+                    <a class="account-button navbar-link text-bright" href="/Home/Logout">Logout</a>
+                    
+                }
+                else
+                {
+                    <a class="account-button navbar-link text-bright"  href="/Home/Login">Login</a>
+                }
+                
+            </div>
+        </nav>
+    </header>
+    
+    @RenderBody()  <!-- This will render the specific page content -->
+    
+
+    
+</body>
+</html>
