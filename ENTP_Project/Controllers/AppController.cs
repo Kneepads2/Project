@@ -19,8 +19,9 @@ namespace ENTP_Project.Controllers
         {
             var events = new List<object>
         {
-            new { title = "Event 1", start = "2024-10-01" },
-            new { title = "Event 2", start = "2024-10-10" },
+            new { title = "Ballet Class", start = "2024-10-01" },
+            new { title = "Zwei Meeting", start = "2024-10-10" },
+            new { title = "Urban Nightmare Extermination", start = "2024-10-20"},
         };
 
             return new JsonResult(events);
