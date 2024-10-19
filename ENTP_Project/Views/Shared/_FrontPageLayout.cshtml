@@ -50,7 +50,7 @@
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .dropdown-content a {
@@ -93,9 +93,17 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="account-button navbar-link text-bright" href="/App/Homepage">Home</a>
-                    <a class="account-button navbar-link text-bright" href="/Home/Logout">Logout</a>
-                    
+                    <div class="dropdown" style="float: right;">
+                        <button class="dropbtn">
+                            <img class="profile" src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" />
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="/App/Homepage">Home</a>
+                            <a href="#">Settings</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a href="/Home/Logout">Logout</a>
+                        </div>
+                    </div>                
                 }
                 else
                 {
@@ -108,7 +116,6 @@
                             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </div>
                     </div>
-                    
                     
                 }
                 
