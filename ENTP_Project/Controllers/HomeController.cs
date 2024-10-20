@@ -44,9 +44,23 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
-        public IActionResult Onboarding()
+        public ViewResult Onboarding()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Onboarding(Registration registration)
+        {
+            if (ModelState.IsValid)
+            {
+                // Process the registration data here
+                // e.g., save it to the database or pass it to another service
+
+                return RedirectToAction("Homepage","App");  // Redirect to a success page or similar
+            }
+
+            return View(registration);  // Return the view with the model if validation fails
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

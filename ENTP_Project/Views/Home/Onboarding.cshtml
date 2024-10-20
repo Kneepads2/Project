@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ENTP_Project.Models.Registration
 @{
     Layout = null;
 }
@@ -11,6 +9,47 @@
         </style>
     </head>
     <body>
-        <p>THE COLOR</p>
+    <form asp-action="Onboarding" method="post">
+
+        <div class="input">
+            <div><label asp-for="Name">Your full name:</label></div>
+            <div><input asp-for="Name" required placeholder="Ex: John Doe" /></div>
+        </div>
+
+        <div class="input">
+            <div><label asp-for="Phone">Your phone number:</label></div>
+            <div>
+                <input asp-for="Phone" required type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Ex: 123-456-7890" />
+            </div>
+        </div>
+
+        <div class="input">
+            <div><label asp-for="Role">Who are you?</label></div>
+            <select name="Role" required>
+                <option selected="selected" value="">Please select your role</option>
+                <option value="User">User</option>
+                <option value="Coach/Trainer">Coach</option>
+            </select>
+        </div>
+
+        <div class="input">
+            <div><label asp-for="Diet">What is your dietary restriction?</label></div>
+            <select name="Diet" required>
+                <option selected="selected" value="">Please select one</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Halal">Halal</option>
+                <option value="Kosher">Kosher</option>
+                <option value="Gluten-free">Gluten-free</option>
+                <option value="Lactose Intolerant">Lactose Intolerant</option>
+                <option value="Low-sodium">Low-sodium Diet</option>
+                <option value="Diabetes">Diabetes Diet</option>
+                <option value="Other">Other</option>
+                <option value="None">None</option>
+            </select>
+        </div>
+
+        <button type="submit">Submit Request</button>
+    </form>
     </body>
 </html>
