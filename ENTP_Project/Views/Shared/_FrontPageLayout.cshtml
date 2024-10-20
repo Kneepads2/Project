@@ -103,7 +103,7 @@
                             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             <a href="/Home/Logout">Logout</a>
                         </div>
-                    </div>                
+                    </div>
                 }
                 else
                 {
@@ -112,12 +112,13 @@
                             <img class="profile" src="https://static.vecteezy.com/system/resources/previews/005/129/844/non_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" />
                         </button>
                         <div class="dropdown-content">
-                            <a href="/Home/Login">Login</a>
+                            <a href="@Url.Action("Login", "Home")">Login</a>
+                            <a href="@Url.Action("Login", "Home")?screen_hint=signup">Sign Up</a>
                             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </div>
                     </div>
-                    
                 }
+
                 
             </div>
         </nav>

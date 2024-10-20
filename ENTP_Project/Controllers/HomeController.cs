@@ -32,6 +32,30 @@ namespace ENTP_Project.Controllers
         {
             return View();
         }
+        [Route("callback")]
+        public async Task<IActionResult> Callback()
+        {
+            var authenticateResult = await HttpContext.AuthenticateAsync();
+
+            if (!authenticateResult.Succeeded)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            var claims = authenticateResult.Principal.Claims;
+
+            // You can check if the user signed up using some of the claim information
+            // Or set a flag when the user signs up
+            bool isNewUser = claims.FirstOrDefault(c => c.Type == "https://localhost:7030/new_user")?.Value == "true";
+
+            if (isNewUser)
+            {
+                return RedirectToAction("Onboarding", "Home");  // Redirect to onboarding or welcome page
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult Index()
         {
             return View();
