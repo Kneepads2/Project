@@ -4,9 +4,9 @@ namespace Dylan_Tran___Assignment_1.Models
 {
     public static class Repository
     {
-        private static List<Registration> register = new();
-        public static IEnumerable<Registration> Register => register;
-        public static void AddRequest(Registration requestForm)
+        private static List<RegistrationModel> register = new();
+        public static IEnumerable<RegistrationModel> Register => register;
+        public static void AddRequest(RegistrationModel requestForm)
         {
             Console.WriteLine(requestForm.ToString());
             //requests.Add(requestForm);
