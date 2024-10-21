@@ -26,5 +26,15 @@ namespace ENTP_Project.Controllers
 
             return new JsonResult(events);
         }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public IActionResult Settings()
+        {
+            return View();
+        }
     }
 }
