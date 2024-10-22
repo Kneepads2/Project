@@ -29,6 +29,14 @@ namespace ENTP_Project.Controllers
             return new JsonResult(events);
         }
 
+        public IActionResult Workouts() { 
+            return View();
+        }
+
+        public IActionResult Meals()
+        {
+            return View();
+        }
         public IActionResult Profile()
         {
             var claims = User.Claims;

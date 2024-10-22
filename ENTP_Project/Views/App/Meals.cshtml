@@ -2,4 +2,59 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+
+    // Example data (in a real scenario, this would come from a model)
+    var containers = new List<string> { "Container 1", "Container 2", "Container 3", "Container 4", "Container 5", "Container 6", "Container 7" };
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Grid layout: 3 columns per row */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+            gap: 20px; /* Spacing between grid items */
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            height: 35vh;
+        }
+
+        /* Responsive behavior for smaller screens */
+        @@media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+            }
+        }
+
+        @@media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr; /* 1 column on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="grid-container">
+            @foreach (var container in containers)
+            {
+                <div class="container">
+                    <h3>@container</h3>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
