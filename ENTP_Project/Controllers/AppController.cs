@@ -33,7 +33,7 @@ namespace ENTP_Project.Controllers
         {
             var claims = User.Claims;
 
-            // Extract the 'name' claim (if you stored the name in user metadata)
+            // Check if the claims are being correctly retrieved
             var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
             var email = claims.FirstOrDefault(c => c.Type == "email")?.Value;
             var phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
@@ -41,17 +41,24 @@ namespace ENTP_Project.Controllers
             var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
             var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
 
-            // Pass the name to the view or use it directly in your logic
+            // Log the values for debugging
+            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}");
+
+            // Create the model with the claims data
             var model = new RegistrationModel
             {
                 Name = name,
+                Email = email,
                 Phone = phone,
                 Role = role,
                 Diet = diet,
                 Plan = plan
             };
+
+            // Pass the model to the view
             return View(model);
         }
+
 
         public IActionResult Settings()
         {
