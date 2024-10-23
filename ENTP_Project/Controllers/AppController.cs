@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using ENTP_Project.Models;
 
@@ -42,10 +43,12 @@ namespace ENTP_Project.Controllers
             var claims = User.Claims;
 
             // Check if the claims are being correctly retrieved
-            var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
-            var email = claims.FirstOrDefault(c => c.Type == "email")?.Value;
+            var name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
+            //var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
+            //var email = claims.FirstOrDefault(c => c.Type == "https://dev-y6sgst5cqueqdc0x.us.auth0.com/email")?.Value;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             var phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
-            var role = claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
             var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
             var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
 
@@ -69,6 +72,11 @@ namespace ENTP_Project.Controllers
 
 
         public IActionResult Settings()
+        {
+            return View();
+        }
+
+        public IActionResult Database()
         {
             return View();
         }
