@@ -23,8 +23,8 @@ namespace ENTP_Project.Controllers
             var events = new List<object>
         {
             new { title = "Ballet Class", start = "2024-10-01" },
-            new { title = "Zwei Meeting", start = "2024-10-10" },
-            new { title = "Urban Nightmare Extermination", start = "2024-10-20"},
+            new { title = "Zoowemama", start = "2024-10-10" },
+            new { title = "Urban Nightmare", start = "2024-10-20"},
         };
 
             return new JsonResult(events);
@@ -42,7 +42,7 @@ namespace ENTP_Project.Controllers
         {
             var claims = User.Claims;
 
-            // Check if the claims are being correctly retrieved
+            //check if the claims are being correctly retrieved
             var name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
             //var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
             //var email = claims.FirstOrDefault(c => c.Type == "https://dev-y6sgst5cqueqdc0x.us.auth0.com/email")?.Value;
@@ -52,7 +52,7 @@ namespace ENTP_Project.Controllers
             var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
             var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
 
-            // Log the values for debugging
+            //log the values for debugging
             Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}");
 
             // Create the model with the claims data
@@ -66,7 +66,6 @@ namespace ENTP_Project.Controllers
                 Plan = plan
             };
 
-            // Pass the model to the view
             return View(model);
         }
 
