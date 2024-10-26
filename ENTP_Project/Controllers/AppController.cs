@@ -51,9 +51,10 @@ namespace ENTP_Project.Controllers
             var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
             var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
             var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
+            var weight = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
 
             //log the values for debugging
-            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}");
+            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");
 
             // Create the model with the claims data
             var model = new RegistrationModel
@@ -63,12 +64,17 @@ namespace ENTP_Project.Controllers
                 Phone = phone,
                 Role = role,
                 Diet = diet,
-                Plan = plan
+                Plan = plan,
+                Weight = weight,
             };
 
             return View(model);
         }
 
+        public IActionResult ProfileChange()
+        {
+            return View();
+        }
 
         public IActionResult Settings()
         {
