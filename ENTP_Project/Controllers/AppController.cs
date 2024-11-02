@@ -51,24 +51,45 @@ namespace ENTP_Project.Controllers
             var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
             var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
             var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
-            var weight = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
+            var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
 
-            //log the values for debugging
-            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");
-
-            // Create the model with the claims data
-            var model = new RegistrationModel
+            int? weight = null;
+            if (int.TryParse(weightStr, out int parsedWeight))
             {
-                Name = name,
-                Email = email,
-                Phone = phone,
-                Role = role,
-                Diet = diet,
-                Plan = plan,
-                Weight = weight,
-            };
+                weight = parsedWeight;
+            }
+           
+            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");       
 
-            return View(model);
+            if (email == "tradylan@sheridancollege.ca") //making an admin role
+            {
+                var adminModel = new RegistrationModel
+                {
+                    Name = "Dylan Tran",
+                    Email = email,
+                    Phone = "+1 647-806-8297",
+                    Role = "Admin",
+                    Diet = "None",
+                    Plan = "Premium",
+                    Weight = 140,
+                };
+                return View(adminModel);
+            }
+
+            else {
+                var model = new RegistrationModel
+                {
+                    Name = name,
+                    Email = email,
+                    Phone = phone,
+                    Role = role,
+                    Diet = diet,
+                    Plan = plan,
+                    Weight = weight,
+                };
+                return View(model);
+            }
+            
         }
 
         public IActionResult ProfileChange()

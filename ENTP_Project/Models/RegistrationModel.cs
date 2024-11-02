@@ -10,6 +10,6 @@ namespace ENTP_Project.Models
         public string? Role { get; set; }
         public string? Diet { get; set; }
         public string? Plan { get; set; }
-        public string? Weight { get; set; }
+        public int? Weight { get; set; }
     }
 }

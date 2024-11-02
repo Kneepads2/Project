@@ -4,7 +4,7 @@
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 
-    // Example data (in a real scenario, this would come from a model)
+    
     var containers = new List<string> { "Container 1", "Container 2", "Container 3", "Container 4", "Container 5", "Container 6", "Container 7" };
 }
 
@@ -12,11 +12,11 @@
 <html lang="en">
 <head>
     <style>
-        /* Grid layout: 3 columns per row */
+       
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-            gap: 20px; /* Spacing between grid items */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
             padding: 20px;
         }
 
@@ -31,16 +31,16 @@
             height: 35vh;
         }
 
-        /* Responsive behavior for smaller screens */
+       
         @@media (max-width: 900px) {
             .grid-container {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+                grid-template-columns: repeat(2, 1fr); 
             }
         }
 
         @@media (max-width: 600px) {
             .grid-container {
-                grid-template-columns: 1fr; /* 1 column on small screens */
+                grid-template-columns: 1fr; 
             }
         }
     </style>
