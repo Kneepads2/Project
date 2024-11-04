@@ -1,6 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    Layout = "~/Views/Shared/_FrontPageLayout.cshtml";
 }
-<h1>@ViewData["Title"]</h1>
+<!--a page display our privacy policy which doesnt really matter-->
 
-<p>Use this page to detail your site's privacy policy.</p>
+<html>
+    <head>
+        <style>
+            .privacy {
+                margin: 30px;
+            }
+
+            .privacy h1 {
+                font-size: 36px;
+                font-weight: bold;              
+            }
+
+            .privacy p {
+                margin-top: 30px;
+                font-size: 28px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="privacy">
+            <h1>Privacy Policy</h1>
+            <p>Your information will not be shared to anyone else.</p>
+            <p>Your information will only be used for the purpose of this service.</p>
+            <p>If you have any concerns or questions regarding your privacy, you may contact us at superbodyfitness@fakeemail.com</p>
+        </div>
+    </body>
+</html>
+

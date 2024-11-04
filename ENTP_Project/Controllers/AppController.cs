@@ -8,17 +8,18 @@ using ENTP_Project.Models;
 //using System.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
-
+//Dylan Tran
 namespace ENTP_Project.Controllers
 {
     public class AppController : Controller
     {
-        public IActionResult Homepage()
+        public IActionResult Homepage() //returns homepage
         {
+            DefineAdmin(); 
             return View();
         }
 
-        public JsonResult GetEvents()
+        public JsonResult GetEvents() //a list of events marked on the calendar, unfinished
         {
             var events = new List<object>
         {
@@ -30,17 +31,19 @@ namespace ENTP_Project.Controllers
             return new JsonResult(events);
         }
 
-        public IActionResult Workouts() { 
+        public IActionResult Workouts() {// returns Workouts view
+            DefineAdmin();
             return View();
         }
 
-        public IActionResult Meals()
+        public IActionResult Meals() //returns Meals view
         {
+            DefineAdmin();
             return View();
         }
-        public IActionResult Profile()
+        public IActionResult Profile() //getting user data from Auth0 and displaying it
         {
-            var claims = User.Claims;
+            var claims = User.Claims; //Auth0 functions
 
             //check if the claims are being correctly retrieved
             var name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
@@ -61,7 +64,7 @@ namespace ENTP_Project.Controllers
            
             Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");       
 
-            if (email == "tradylan@sheridancollege.ca") //making an admin role
+            if (email == "tradylan@sheridancollege.ca") //making an admin role based on the email
             {
                 var adminModel = new RegistrationModel
                 {
@@ -73,10 +76,11 @@ namespace ENTP_Project.Controllers
                     Plan = "Premium",
                     Weight = 140,
                 };
+                DefineAdmin();
                 return View(adminModel);
             }
 
-            else {
+            else { //if your email isnt an admin email, the form you filled out will be your profile
                 var model = new RegistrationModel
                 {
                     Name = name,
@@ -87,24 +91,44 @@ namespace ENTP_Project.Controllers
                     Plan = plan,
                     Weight = weight,
                 };
+                DefineAdmin();
                 return View(model);
             }
             
         }
 
-        public IActionResult ProfileChange()
+        public IActionResult ProfileChange() //returns profile change form
         {
+            DefineAdmin();
             return View();
         }
 
-        public IActionResult Settings()
+        public IActionResult Settings() //returns settings view, unfinished
         {
+            DefineAdmin();
             return View();
         }
 
-        public IActionResult Database()
+        public IActionResult Database() //returns Database, unfinished because my partner didnt do any work
         {
+            DefineAdmin();
             return View();
+        }
+
+        private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            object role = null;
+            if (email == "tradylan@sheridancollege.ca")//TO BE AN ADMIN, YOUR EMAIL MUST BE LISTED HERE
+            {
+                role = "Admin";
+            }
+            else
+            {
+                role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+            }
+            
+            ViewData["UserRole"] = role;
         }
     }
 }

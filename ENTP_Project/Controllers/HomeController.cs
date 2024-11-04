@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
+//Dylan Tran, 11/3/2024
 namespace ENTP_Project.Controllers
 {
     public class HomeController : Controller
@@ -16,38 +17,34 @@ namespace ENTP_Project.Controllers
             _logger = logger;
         }
 
-        public IActionResult Login()
+        public IActionResult Login() //login function
         {
-            var redirectUri = Url.Action("Homepage", "App");
-            return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0");
+            var redirectUri = Url.Action("Homepage", "App"); //once logged in, redirects to /App/Homepagw
+            return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0"); //we use Auth0 to help with the login
         }
 
         public IActionResult Logout()
         {
-            var callbackUrl = Url.Action("LoggedOut", "Home");
+            var callbackUrl = Url.Action("LoggedOut", "Home"); //redirects to the Logout page once logged out
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                            CookieAuthenticationDefaults.AuthenticationScheme, "Auth0");
         }
 
-        public IActionResult LoggedOut()
+        public IActionResult LoggedOut() //returns logout page
         {
             return View();
         }
 
-        public IActionResult Index()
+        public IActionResult Index() //returns frontpage view
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy() //returns privacy view
         {
             return View();
         }
 
-        public ViewResult Onboarding()
-        {
-            return View();
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

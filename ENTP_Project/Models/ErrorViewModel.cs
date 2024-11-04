@@ -7,3 +7,4 @@ namespace ENTP_Project.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+//not used right now
