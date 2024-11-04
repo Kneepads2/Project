@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
     <style>
         body {
-            background-color: rgb(70,70,70);
+            background-color: rgb(50,50,50);
         }
 
         .section-top {
@@ -117,7 +117,7 @@
                 <input type="radio" id="thisMonth" name="viewOption" value="monthly" />
                 <label for="thisMonth">This Month</label>
             </div>
-            <div class="stats">
+            <div class="stats"> <!--the middle container, not planned on finishing until month 2-->
                 <p>Total Calories Burned: </p>
                 <p>Total Steps: </p>
                 <p>Time spent exercising: </p>
@@ -138,7 +138,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: '/App/GetEvents'     // URL to fetch events from your controller
+                events: '/App/GetEvents'     //URL to fetch events from your controller
             });
             calendar.render();
         });

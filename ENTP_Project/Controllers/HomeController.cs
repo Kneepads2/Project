@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 //Dylan Tran, 11/3/2024
 namespace ENTP_Project.Controllers
@@ -37,11 +38,13 @@ namespace ENTP_Project.Controllers
 
         public IActionResult Index() //returns frontpage view
         {
+            DefineAdmin();
             return View();
         }
 
         public IActionResult Privacy() //returns privacy view
         {
+            DefineAdmin();
             return View();
         }
 
@@ -49,6 +52,22 @@ namespace ENTP_Project.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            object role = null;
+            if (email == "tradylan@sheridancollege.ca" || email == ("oU80WIkcvSUW@fakemailserver.com").ToLower())//TO BE AN ADMIN, YOUR EMAIL MUST BE LISTED HERE
+            {
+                role = "Admin";
+            }
+            else
+            {
+                role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+            }
+
+            ViewData["UserRole"] = role;
         }
     }
 }

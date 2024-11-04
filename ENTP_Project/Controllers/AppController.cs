@@ -23,9 +23,9 @@ namespace ENTP_Project.Controllers
         {
             var events = new List<object>
         {
-            new { title = "Ballet Class", start = "2024-10-01" },
-            new { title = "Zoowemama", start = "2024-10-10" },
-            new { title = "Urban Nightmare", start = "2024-10-20"},
+            new { title = "Ballet Class", start = "2024-11-01" },
+            new { title = "Zoowemama", start = "2024-11-10" },
+            new { title = "Urban Nightmare", start = "2024-11-20"},
         };
 
             return new JsonResult(events);
@@ -64,17 +64,17 @@ namespace ENTP_Project.Controllers
            
             Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");       
 
-            if (email == "tradylan@sheridancollege.ca") //making an admin role based on the email
+            if (email == "tradylan@sheridancollege.ca" || email == "ou80wikcvsuw@fakemailserver.com") //making an admin role based on the email
             {
                 var adminModel = new RegistrationModel
                 {
-                    Name = "Dylan Tran",
+                    Name = name,
                     Email = email,
-                    Phone = "+1 647-806-8297",
+                    Phone = phone,
                     Role = "Admin",
-                    Diet = "None",
-                    Plan = "Premium",
-                    Weight = 140,
+                    Diet = diet,
+                    Plan = plan,
+                    Weight = weight,
                 };
                 DefineAdmin();
                 return View(adminModel);
@@ -119,7 +119,7 @@ namespace ENTP_Project.Controllers
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             object role = null;
-            if (email == "tradylan@sheridancollege.ca")//TO BE AN ADMIN, YOUR EMAIL MUST BE LISTED HERE
+            if (email == "tradylan@sheridancollege.ca" || email == ("oU80WIkcvSUW@fakemailserver.com").ToLower())//TO BE AN ADMIN, YOUR EMAIL MUST BE LISTED HERE
             {
                 role = "Admin";
             }
