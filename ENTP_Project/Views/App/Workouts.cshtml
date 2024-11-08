@@ -5,7 +5,7 @@
     // Example data (in a real scenario, this would come from a model)
     var containers = new List<string> { "Container 1", "Container 2", "Container 3", "Container 4", "Container 5", "Container 6", "Container 7" };
 }
-
+@model ENTP_Project.Models.RegistrationModel
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,10 +39,41 @@
                     grid-template-columns: 1fr; 
                 }
             }
+
+            .create {
+                
+                background-color: rgb(102,178,255);
+                margin: 20px 20px 0px 20px;
+                font-size: 20px;
+                font-weight: bold;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 15px;
+                display: block;
+                width: fit-content;
+            }
+
+            .button-container {
+                text-align: center;
+                display: flex;
+                justify-content: flex-end;     
+            }
+
+            .button-container a {
+                text-decoration: none;
+                color: black;
+                padding: 3px;
+            }
         </style>
     </head>
     <body>
         <div class="section">
+            <div class="button-container">
+                @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
+                {
+                    <a href="/App/CreateWorkout" class="create">Create New Workout</a>
+                }
+            </div>
+            
             <div class="grid-container">
                 @foreach (var container in containers)
                 {

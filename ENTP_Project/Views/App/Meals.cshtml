@@ -43,10 +43,38 @@
                 grid-template-columns: 1fr; 
             }
         }
+
+        .create {
+            background-color: rgb(102,178,255);
+            margin: 20px 20px 0px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            display: block;
+            width: fit-content;
+        }
+
+        .button-container {
+            text-align: center;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .button-container a {
+                text-decoration: none;
+                color: black;
+            }
     </style>
 </head>
 <body>
     <div class="section">
+        <div class="button-container">
+            @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
+            {
+                <a href="/App/CreateMeal" class="create">Create New Meal Plan</a>
+            }
+        </div>
         <div class="grid-container">
             @foreach (var container in containers)
             {

@@ -115,6 +115,17 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
+        public IActionResult CreateMeal()
+        {
+            DefineAdmin();
+            return View();
+        }
+
+        public IActionResult CreateWorkout()
+        {
+            DefineAdmin();
+            return View();
+        }
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
