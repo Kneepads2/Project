@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+<html>
+    <head>
+        <style>
+            
+            body{
+                background-color: rgb(35, 35, 35);
+            }
+
+            .section {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+            }
+
+            .content {
+                background-color: white;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                border: 1px solid #ddd;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                text-align: center;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                padding: 70px;
+                width: 100%;
+                max-width: 1200px;
+                height: auto;
+                margin: 30px;
+            }
+
+            .content img {
+                width: 100%;
+                max-width: 90%;
+                max-height: 50%;
+                object-fit: contain;
+                border-radius: 8px;
+                margin-top: 10px;
+            }
+
+            .content h1 {
+                text-decoration: underline;
+                font-weight: bold;
+            }
+
+            .content p, h3 {
+                text-align: left;
+                font-size: 22px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="section">
+            <div class="content">
+                <h1>Meal Title</h1>
+                <img src="https://limbuscompany.wiki.gg/images/thumb/6/62/False_Apple_Idle_Sprite.png/579px-False_Apple_Idle_Sprite.png" alt="apple" />
+                <h3 style="margin-top: 25px;">For Users with ___ (diet)</h3>
+                <h3>Plan: </h3>
+                <p>Description/Steps/Recipe</p>
+            </div>
+        </div>
+    </body>
+</html>

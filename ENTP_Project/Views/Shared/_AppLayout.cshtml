@@ -28,6 +28,7 @@
 
         .nav-item {
             float: right;
+            font-size: 20px;
         }
 
         .dropbtn {
@@ -85,15 +86,18 @@
                 <a class="navbar-brand" href="/">Super Body Fitness</a>
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a style="font-size: 20px;" href="/App/Workouts" class="nav-link text-bright">Workouts</a>
+                        <a  href="/App/Workouts" class="nav-link text-bright">Workouts</a>
                     </li>
                     <li class="nav-item">
-                        <a style="font-size: 20px;" class="nav-link text-bright" href="/App/Meals">Meal Plans</a>
+                        <a  class="nav-link text-bright" href="/App/Meals">Meal Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/App/Chat" class="nav-link text-bright">Chat</a>
                     </li>
                     @if (ViewData["UserRole"]?.ToString() == "Admin")
                     {
                         <li class="nav-item">
-                            <a style="font-size: 20px;" class="nav-link text-bright" href="/App/Database">Admin Panel</a>
+                            <a class="nav-link text-bright" href="/App/Database">Admin Panel</a>
                         </li>
                     }
                 </ul>

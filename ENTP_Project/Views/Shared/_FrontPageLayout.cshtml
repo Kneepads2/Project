@@ -83,20 +83,7 @@
         <nav style="background-color: rgb(25,25,25);" class="navbar navbar-expand-sm navbar-dark box-shadow">
             <div class="container-fluid">
                 <a style="font-size: 30px;" class="navbar-brand" href="/">Super Body Fitness</a>
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a style="font-size: 20px;" class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Index">Workouts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a style="font-size: 20px;" class="nav-link text-bright" asp-area="" asp-controller="Home" asp-action="Privacy">Meal Plans</a>
-                    </li>
-                    @if (ViewData["UserRole"]?.ToString() == "Admin")
-                    {
-                        <li class="nav-item">
-                            <a style="font-size: 20px;" class="nav-link text-bright" href="/App/Database">Admin Panel</a>
-                        </li>
-                    }
-                </ul>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="dropdown" style="float: right;">
