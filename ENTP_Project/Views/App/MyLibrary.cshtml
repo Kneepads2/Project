@@ -1,0 +1,168 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+    var mealContainers = new List<string> { "Vinegar Grapes", "Meatball Hot", "Watermelon Brunch", "Apple Pie Diet" };
+    var workoutContainers = new List<string> { "Walk the Plank", "Egg Shell Beater", "Skull Buster", "Bust a Move" };
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .container img {
+            width: 100%;
+            max-width: 90%;
+            max-height: 50%;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+            .container h3 {
+                text-align: left;
+            }
+
+        /* Responsive styles */
+        @@media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @@media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .radio-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 50px;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        label {
+            cursor: pointer;
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            width: auto;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="radio"]:checked + label {
+            background-color: #0984e3;
+            color: white;
+        }
+
+        .btn {
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .buttons {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+     
+        <div class="radio-container">
+            <input type="radio" id="mymeals" name="viewOption" value="meals" checked />
+            <label for="mymeals">My Meals</label>
+
+            <input type="radio" id="myworkouts" name="viewOption" value="workouts" />
+            <label for="myworkouts">My Workouts</label>
+        </div>
+
+        
+        <div class="grid-container">
+           
+            @foreach (var meal in mealContainers)
+            {
+                <div class="container meal">
+                    <h1>@meal</h1>
+                    <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Meal image" />
+                    <h3>Diet: </h3>
+                    <h3>Plan: </h3>
+                    <div class="buttons">
+                        <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            }
+
+            
+            @foreach (var workout in workoutContainers)
+            {
+                <div class="container workout">
+                    <h1>@workout</h1>
+                    <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
+                    <h3>Instructor: </h3>
+                    <h3>Difficulty: </h3>
+                    <h3>Plan: </h3>
+                    <div class="buttons">
+                        <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
+                    </div>                  
+                </div>
+            }
+        </div>
+    </div>
+
+    <script>
+     
+        document.querySelectorAll('input[name="viewOption"]').forEach((radio) => {
+            radio.addEventListener('change', function () {
+                // Get the selected view
+                const selectedView = this.value;
+
+          
+                const meals = document.querySelectorAll('.meal');
+                const workouts = document.querySelectorAll('.workout');
+
+        
+                if (selectedView === 'meals') {
+                    meals.forEach(meal => meal.style.display = 'flex');
+                    workouts.forEach(workout => workout.style.display = 'none');
+                } else {
+                    meals.forEach(meal => meal.style.display = 'none');
+                    workouts.forEach(workout => workout.style.display = 'flex');
+                }
+            });
+        });
+
+        
+        document.getElementById('mymeals').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>

@@ -29,6 +29,7 @@
         .nav-item {
             float: right;
             font-size: 20px;
+            width: auto;
         }
 
         .dropbtn {
@@ -93,13 +94,16 @@
                     </li>
                     <li class="nav-item">
                         <a href="/App/Chat" class="nav-link text-bright">Chat</a>
-                    </li>
+                    </li>                   
                     @if (ViewData["UserRole"]?.ToString() == "Admin")
                     {
                         <li class="nav-item">
                             <a class="nav-link text-bright" href="/App/Database">Admin Panel</a>
                         </li>
                     }
+                    <li class="nav-item">
+                        <a href="/App/MyLibrary" class="nav-link text-bright">My Library</a>
+                    </li>                 
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {

@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
        
         .grid-container {
@@ -81,6 +82,22 @@
                 color: black;
                 padding: 0px 3px;
             }
+
+        .btn {         
+            border: none; 
+            color: white; 
+            padding: 12px 16px; 
+            font-size: 16px; 
+            cursor: pointer; 
+        }
+
+            .btn:hover {
+                background-color: whitesmoke;
+            }
+
+        .buttons {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +116,15 @@
                     <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
                     <h3>Diet: </h3>
                     <h3>Plan: </h3>
+                    <div class="buttons">
+                        <button style="background-color:deepskyblue; float: left; padding: 12px 24px; font-weight: bold;" class="btn"><i class="fa fa-plus"></i> Add</button>
+                        @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
+                        {
+                            <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
+                            <button style="background-color: dodgerblue;" class="btn"><i class="fa fa-edit"></i></button>
+
+                        }
+                    </div>
                 </div>
             }
         </div>
