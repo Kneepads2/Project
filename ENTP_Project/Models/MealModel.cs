@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 namespace ENTP_Project.Models
 {
@@ -10,5 +11,6 @@ namespace ENTP_Project.Models
         public string? Diet { get; set; }
         public string? Description { get; set; }
         public string? Plan { get; set; }
+        public UserModel? Creator { get; set; } 
     }
 }

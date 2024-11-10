@@ -66,7 +66,7 @@ namespace ENTP_Project.Controllers
 
             if (email == "tradylan@sheridancollege.ca" || email == "ou80wikcvsuw@fakemailserver.com") //making an admin role based on the email
             {
-                var adminModel = new RegistrationModel
+                var adminModel = new UserModel
                 {
                     Name = name,
                     Email = email,
@@ -81,7 +81,7 @@ namespace ENTP_Project.Controllers
             }
 
             else { //if your email isnt an admin email, the form you filled out will be your profile
-                var model = new RegistrationModel
+                var model = new UserModel
                 {
                     Name = name,
                     Email = email,
