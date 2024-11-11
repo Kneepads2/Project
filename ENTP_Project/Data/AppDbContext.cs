@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ENTP_Project.Models;
 
-namespace ENTP_Project.Models
+namespace ENTP_Project.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }

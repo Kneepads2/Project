@@ -1,26 +1,28 @@
 using Auth0.AspNetCore.Authentication;
-using ENTP_Project.Models;
+using ENTP_Project.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+// Configure the DbContext to use SQLite
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+// Cookie and HTTPS settings
 builder.Services.AddHttpsRedirection(options =>
 {
     options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-    options.HttpsPort = 443; // Make sure your app runs on HTTPS port
+    options.HttpsPort = 443;
 });
 
-// Cookie configuration for HTTPS
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    options.MinimumSameSitePolicy = SameSiteMode.None; // Ensure cookies work across sites
-    options.Secure = CookieSecurePolicy.Always; // Ensure secure cookies
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always;
 });
 
+// Configure Auth0 authentication
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"];
@@ -28,17 +30,15 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Scope = "openid profile email";
 });
 
-// Add services to the container.
+// Add MVC services
 builder.Services.AddControllersWithViews();
-
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -50,6 +50,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Route setup for MVC controllers
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
