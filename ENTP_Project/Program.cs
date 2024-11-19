@@ -4,12 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure the DbContext to use SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-// Cookie and HTTPS settings
 builder.Services.AddHttpsRedirection(options =>
 {
     options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
@@ -22,7 +19,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.Secure = CookieSecurePolicy.Always;
 });
 
-// Configure Auth0 authentication
+//Configure Auth0 authentication
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"];
@@ -30,12 +27,11 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Scope = "openid profile email";
 });
 
-// Add MVC services
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure HTTP request pipeline
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

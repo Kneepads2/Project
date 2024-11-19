@@ -5,7 +5,7 @@
 namespace ENTP_Project.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,8 +49,7 @@ namespace ENTP_Project.Migrations
                         name: "FK_Meals_Users_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,8 +73,7 @@ namespace ENTP_Project.Migrations
                         name: "FK_Workouts_Users_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

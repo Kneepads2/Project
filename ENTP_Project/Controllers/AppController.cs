@@ -4,17 +4,33 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using ENTP_Project.Models;
-
+using ENTP_Project.Data;
 //using System.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
 
 //Dylan Tran
 namespace ENTP_Project.Controllers
 {
     public class AppController : Controller
     {
-        public IActionResult Homepage() //returns homepage
+        private AppDbContext _context;
+        
+        public async Task<IActionResult> Homepage() //returns homepage
         {
+
+            var login = User.Claims.FirstOrDefault(c => c.Type == "loginCount");
+
+            if (login != null && int.TryParse(login.Value, out int loginCount)) 
+            {
+                if (loginCount == 1) 
+                {
+
+                    return Redirect("Welcome");
+                }
+            }
+
             DefineAdmin(); 
             return View();
         }
@@ -150,6 +166,52 @@ namespace ENTP_Project.Controllers
             DefineAdmin();
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Welcome() {
+            return View();
+        }
+
+        [HttpPost("App/Welcome")]
+        public async Task<IActionResult> Welcomed() //dedicated page to post user data to database
+        {
+            var claims = User.Claims;
+
+            var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
+
+            int? weight = null;
+            if (int.TryParse(weightStr, out int parsedWeight))
+            {
+                weight = parsedWeight;
+            }
+
+            try
+            {
+                // Add the user to the database
+                var newUser = new UserModel
+                {
+                    Name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value,
+                    Email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value,
+                    Phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value,
+                    Role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value,
+                    Diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value,
+                    Plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value,
+                    Weight = weight
+                };
+
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Homepage", "App");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, new { message = "Internal server error" });
+            }
+            //return View();
+        }
+
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;

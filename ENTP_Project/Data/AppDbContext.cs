@@ -15,21 +15,22 @@ namespace ENTP_Project.Data
         public DbSet<WorkoutModel> Workouts { get; set; }
         public DbSet<MealModel> Meals { get; set; }
 
-        // Optionally, configure relationships and constraints
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // If needed, add further configuration for your tables here
-            modelBuilder.Entity<UserModel>()
-                .HasMany(u => u.MyMeals)
-                .WithOne(m => m.Creator)
-                .OnDelete(DeleteBehavior.SetNull);
+       
+            modelBuilder.Entity<MealModel>()
+                .HasOne(m => m.Creator)  
+                .WithMany(u => u.MyMeals) 
+                .HasForeignKey(m => m.UserId); 
 
-            modelBuilder.Entity<UserModel>()
-                .HasMany(u => u.MyWorkouts)
-                .WithOne(w => w.Creator)
-                .OnDelete(DeleteBehavior.SetNull);
+            
+            modelBuilder.Entity<WorkoutModel>()
+                .HasOne(w => w.Creator)  
+                .WithMany(u => u.MyWorkouts) 
+                .HasForeignKey(w => w.UserId); 
         }
     }
 }

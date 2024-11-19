@@ -1,8 +1,10 @@
 using Auth0.AspNetCore.Authentication;
+using ENTP_Project.Data;
 using ENTP_Project.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -12,14 +14,15 @@ namespace ENTP_Project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private AppDbContext _context;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Login() //login function
-        {
+        public async Task<IActionResult> Login() //login function
+        {         
             var redirectUri = Url.Action("Homepage", "App"); //once logged in, redirects to /App/Homepagw
             return Challenge(new AuthenticationProperties { RedirectUri = redirectUri }, "Auth0"); //we use Auth0 to help with the login
         }

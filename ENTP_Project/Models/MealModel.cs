@@ -11,6 +11,9 @@ namespace ENTP_Project.Models
         public string? Diet { get; set; }
         public string? Description { get; set; }
         public string? Plan { get; set; }
-        public UserModel? Creator { get; set; } 
+        public int UserId { get; set; }  // Foreign Key
+
+        [ForeignKey("UserId")]
+        public UserModel Creator { get; set; }  // Navigation property
     }
 }
