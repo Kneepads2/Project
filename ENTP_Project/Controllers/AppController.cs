@@ -15,7 +15,10 @@ namespace ENTP_Project.Controllers
 {
     public class AppController : Controller
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
+        public AppController(AppDbContext context) { 
+            _context = context;
+        }      
         
         public async Task<IActionResult> Homepage() //returns homepage
         {
@@ -127,8 +130,9 @@ namespace ENTP_Project.Controllers
 
         public IActionResult Database() //returns Database, unfinished because my partner didnt do any work
         {
+            var users = _context.Users.ToList();
             DefineAdmin();
-            return View();
+            return View(users);
         }
 
         public IActionResult CreateMeal()
@@ -168,15 +172,19 @@ namespace ENTP_Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Welcome() {
-            return View();
-        }
-
-        [HttpPost("App/Welcome")]
-        public async Task<IActionResult> Welcomed() //dedicated page to post user data to database
+        public IActionResult Welcome()
         {
-            var claims = User.Claims;
+            var claims = User.Claims; //Auth0 functions
 
+            //check if the claims are being correctly retrieved
+            var name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
+            //var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
+            //var email = claims.FirstOrDefault(c => c.Type == "https://dev-y6sgst5cqueqdc0x.us.auth0.com/email")?.Value;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
+            var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+            var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
+            var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
             var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
 
             int? weight = null;
@@ -185,32 +193,74 @@ namespace ENTP_Project.Controllers
                 weight = parsedWeight;
             }
 
-            try
+            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");
+
+            if (email == "tradylan@sheridancollege.ca" || email == "ou80wikcvsuw@fakemailserver.com") //making an admin role based on the email
             {
-                // Add the user to the database
-                var newUser = new UserModel
+                var adminModel = new UserModel
                 {
-                    Name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value,
-                    Email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value,
-                    Phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value,
-                    Role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value,
-                    Diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value,
-                    Plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value,
-                    Weight = weight
+                    Name = name,
+                    Email = email,
+                    Phone = phone,
+                    Role = "Admin",
+                    Diet = diet,
+                    Plan = plan,
+                    Weight = weight,
                 };
-
-                _context.Users.Add(newUser);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Homepage", "App");
+                DefineAdmin();
+                return View(adminModel);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return StatusCode(500, new { message = "Internal server error" });
+
+            else
+            { //if your email isnt an admin email, the form you filled out will be your profile
+                var model = new UserModel
+                {
+                    Name = name,
+                    Email = email,
+                    Phone = phone,
+                    Role = role,
+                    Diet = diet,
+                    Plan = plan,
+                    Weight = weight,
+                };
+                DefineAdmin();
+                return View(model);
             }
             //return View();
         }
+
+        [HttpPost("App/Welcome")]
+        public async Task<IActionResult> Welcomed(UserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var claims = User.Claims;
+                model.Name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
+                model.Email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+                model.Phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
+                model.Role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+                model.Diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
+                model.Plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
+                var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
+                model.Weight = Int32.Parse(weightStr);
+                try
+                {
+                    _context.Users.Add(model);  // Add newUser to the database
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Homepage", "App");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving data: {ex.Message}");
+                    Console.WriteLine($"Error: {ex.Message}, Inner Exception: {ex.InnerException?.Message}");
+                    return StatusCode(500, new { message = "Internal server error" });
+                }
+            }
+            return View(model); // Return the same view if ModelState is invalid
+        }
+
+
 
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {

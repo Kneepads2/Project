@@ -1,0 +1,139 @@
+﻿@model ENTP_Project.Models.UserModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <style>
+        body {
+            background-color: rgb(35,35,35);
+        }
+
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .section {
+            padding: 70px;
+            width: 100%;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            height: auto;
+        }
+
+            .section h2, .section p, .section h1 {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                text-align: left;
+            }
+
+            .section .input {
+            }
+
+            .section h2 {
+                font-size: 20px;
+                border-width: 1px 0px 0px 0px;
+                border-color: rgb(130,130,130);
+                border-style: solid;
+                text-align: left;
+                color: rgb(25,25,25);
+                margin-top: 25px;
+                padding-top: 12px;
+
+            }
+
+            .section p {
+                font-size: 20px;
+                margin-bottom: 30px;
+            }
+
+            .section button {
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                margin-top: 25px;
+                border-radius: 20px;
+                font-size: 20px;
+                font-weight: bold;
+                background-color: rgb(102,178,255);
+            }
+
+            .section h1 {
+                text-align: center;
+                font-size: 28px;
+                font-weight: bold;
+
+            }
+    </style>
+</head>
+<body>
+
+    <form class="center-content" asp-action="RegistrationModel" method="post">
+        <div class="section">
+            <h1>Profile Change Form</h1>
+            <div class="input">
+                <h2>Your name:</h2>
+                <input asp-for="Name" required placeholder="Ex: Dylan Tran" />
+            </div>
+
+            <!--<div class="input">
+                <h2>Your email:</h2>
+                <input asp-for="Email" required type="email" placeholder="Ex: tradylan@sheridancollege.ca" />
+            </div> -->
+
+            <div class="input">
+                <h2>Your phone number:</h2>
+                <input asp-for="Phone" required type="tel" pattern="[0-9]{9}" placeholder="Ex: 1234567890" />
+
+            </div>
+
+            <div class="input">
+                <h2>Your role: </h2>
+                <select name="Role" required>
+                    <option selected="selected" value="User">User</option>
+                    <option value="Coach/Trainer">Coach/Trainer</option>
+                </select>
+            </div>
+
+            <div class="input">
+                <h2>Dietary Restriction: </h2>
+                <select name="Diet" required>
+                    <option selected="selected" value="None">None</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Halal">Halal</option>
+                    <option value="Kosher">Kosher</option>
+                    <option value="Keto">Keto</option>
+                    <option value="Lactose Intolerant">Lactose Intolerant</option>
+                    <option value="Gluten-free">Gluten-free</option>
+                    <option value="Diabetes Diet">Diabetes Diet</option>
+                    <option value="Low-sodium Diet">Low-sodium Diet</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="input">
+                <h2>New weight (in pounds): </h2>
+                <input asp-for="Weight" required type="number" placeholder="Ex: 180" style="border-width: 0px 0px 1px 0px; border-color: rgb(130,130,130); margin-bottom: 20px;" />
+            </div>
+
+            <div>
+                
+            </div>
+            <button type="submit">Submit Request</button>
+        </div>
+    </form>
+</body>
+</html>

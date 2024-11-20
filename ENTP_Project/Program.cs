@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("Database")));
 
 builder.Services.AddHttpsRedirection(options =>
 {
@@ -30,6 +30,12 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+/*using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated();
+} */
 
 
 if (!app.Environment.IsDevelopment())
