@@ -9,6 +9,7 @@ using ENTP_Project.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
+using Auth0.ManagementApi.Models;
 
 //Dylan Tran
 namespace ENTP_Project.Controllers
@@ -23,15 +24,12 @@ namespace ENTP_Project.Controllers
         public async Task<IActionResult> Homepage() //returns homepage
         {
 
-            var login = User.Claims.FirstOrDefault(c => c.Type == "loginCount");
-
-            if (login != null && int.TryParse(login.Value, out int loginCount)) 
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (userCheck == null) 
             {
-                if (loginCount == 1) 
-                {
-
-                    return Redirect("Welcome");
-                }
+                return Redirect("Welcome");
             }
 
             DefineAdmin(); 
@@ -128,6 +126,7 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
+        [HttpGet("App/Database")]
         public IActionResult Database() //returns Database, unfinished because my partner didnt do any work
         {
             var users = _context.Users.ToList();
@@ -238,7 +237,16 @@ namespace ENTP_Project.Controllers
                 model.Name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
                 model.Email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
                 model.Phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
-                model.Role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+
+                if (model.Email == "tradylan@sheridancollege.ca" || model.Email == ("oU80WIkcvSUW@fakemailserver.com").ToLower())//TO BE AN ADMIN, YOUR EMAIL MUST BE LISTED HERE
+                {
+                    model.Role = "Admin";
+                }
+                else
+                {
+                    model.Role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+                }
+
                 model.Diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
                 model.Plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
                 var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
