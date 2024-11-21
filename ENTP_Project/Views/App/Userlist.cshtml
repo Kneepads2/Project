@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ENTP_Project.Models.UserModel>
+
+@{
+    ViewData["Title"] = "All Users";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ENTP_Project</title>
+
+    <!-- Link to the external CSS file -->
+    <link href="~/css/userlist.css" rel="stylesheet" />
+    
+    @* Any other head content such as JS libraries or meta tags *@
+</head>
+<div class="container mt-5">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered shadow-lg">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Diet</th>
+                    <th>Plan</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Phone</td>
+                        <td>@user.Role</td>
+                        <td>@user.Diet</td>
+                        <td>@user.Plan</td>
+                        <td>@user.Weight</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

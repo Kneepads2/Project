@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using Auth0.ManagementApi.Models;
+using Microsoft.Extensions.Options;
 
 //Dylan Tran
 namespace ENTP_Project.Controllers
@@ -17,22 +18,23 @@ namespace ENTP_Project.Controllers
     public class AppController : Controller
     {
         private readonly AppDbContext _context;
-        public AppController(AppDbContext context) { 
+        public AppController(AppDbContext context)
+        {
             _context = context;
-        }      
-        
+        }
+
         public async Task<IActionResult> Homepage() //returns homepage
         {
 
             var claims = User.Claims;
             var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (userCheck == null) 
+            if (userCheck == null)
             {
                 return Redirect("Welcome");
             }
 
-            DefineAdmin(); 
+            DefineAdmin();
             return View();
         }
 
@@ -48,7 +50,8 @@ namespace ENTP_Project.Controllers
             return new JsonResult(events);
         }
 
-        public IActionResult Workouts() {// returns Workouts view
+        public IActionResult Workouts()
+        {// returns Workouts view
             DefineAdmin();
             return View();
         }
@@ -58,62 +61,8 @@ namespace ENTP_Project.Controllers
             DefineAdmin();
             return View();
         }
-        public IActionResult Profile() //getting user data from Auth0 and displaying it
-        {
-            var claims = User.Claims; //Auth0 functions
 
-            //check if the claims are being correctly retrieved
-            var name = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? claims.FirstOrDefault(c => c.Type == "email")?.Value;
-            //var name = claims.FirstOrDefault(c => c.Type == "name")?.Value;
-            //var email = claims.FirstOrDefault(c => c.Type == "https://dev-y6sgst5cqueqdc0x.us.auth0.com/email")?.Value;
-            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
-            var phone = claims.FirstOrDefault(c => c.Type == "phone")?.Value;
-            var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
-            var diet = claims.FirstOrDefault(c => c.Type == "diet")?.Value;
-            var plan = claims.FirstOrDefault(c => c.Type == "plan")?.Value;
-            var weightStr = claims.FirstOrDefault(c => c.Type == "weight")?.Value;
-
-            int? weight = null;
-            if (int.TryParse(weightStr, out int parsedWeight))
-            {
-                weight = parsedWeight;
-            }
-           
-            Console.WriteLine($"Name: {name}, Email: {email}, Phone: {phone}, Role: {role}, Diet: {diet}, Plan: {plan}, Weight: {weight}");       
-
-            if (email == "tradylan@sheridancollege.ca" || email == "ou80wikcvsuw@fakemailserver.com") //making an admin role based on the email
-            {
-                var adminModel = new UserModel
-                {
-                    Name = name,
-                    Email = email,
-                    Phone = phone,
-                    Role = "Admin",
-                    Diet = diet,
-                    Plan = plan,
-                    Weight = weight,
-                };
-                DefineAdmin();
-                return View(adminModel);
-            }
-
-            else { //if your email isnt an admin email, the form you filled out will be your profile
-                var model = new UserModel
-                {
-                    Name = name,
-                    Email = email,
-                    Phone = phone,
-                    Role = role,
-                    Diet = diet,
-                    Plan = plan,
-                    Weight = weight,
-                };
-                DefineAdmin();
-                return View(model);
-            }
-            
-        }
-
+       
         public IActionResult ProfileChange() //returns profile change form
         {
             DefineAdmin();
@@ -126,13 +75,13 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
-        [HttpGet("App/Database")]
-        public IActionResult Database() //returns Database, unfinished because my partner didnt do any work
-        {
-            var users = _context.Users.ToList();
-            DefineAdmin();
-            return View(users);
-        }
+        // [HttpGet("App/Database")]
+        // public IActionResult Database() //returns Database, unfinished because my partner didnt do any work
+        // {
+        //     var users = _context.Users.ToList();
+        //     DefineAdmin();
+        //     return View(users);
+        // }
 
         public IActionResult CreateMeal()
         {
@@ -282,8 +231,16 @@ namespace ENTP_Project.Controllers
             {
                 role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
             }
-            
+
             ViewData["UserRole"] = role;
+        }
+
+        [HttpGet]
+        public IActionResult Userlist()
+        {
+            // Fetch all users from the database
+            var users = _context.Users.ToList();
+            return View(users);  // Return the list of users to the Razor view
         }
     }
 }
