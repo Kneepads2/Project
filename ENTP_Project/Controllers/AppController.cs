@@ -234,13 +234,6 @@ namespace ENTP_Project.Controllers
 
             ViewData["UserRole"] = role;
         }
-
-        [HttpGet]
-        public IActionResult Userlist()
-        {
-            // Fetch all users from the database
-            var users = _context.Users.ToList();
-            return View(users);  // Return the list of users to the Razor view
-        }
+       
     }
 }
