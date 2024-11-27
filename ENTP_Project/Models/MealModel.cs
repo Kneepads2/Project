@@ -14,6 +14,6 @@ namespace ENTP_Project.Models
         public int UserId { get; set; }  // Foreign Key
 
         [ForeignKey("UserId")]
-        public UserModel Creator { get; set; }  // Navigation property
+        public UserModel Creator { get; set; }// = context.getuserwhereUserId=UserId
     }
 }

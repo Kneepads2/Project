@@ -128,6 +128,7 @@ namespace ENTP_Project.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Meals", "App");
             }
+            Console.WriteLine($"{meal.Title}, {meal.Diet}, {meal.ImageUrl}, {meal.UserId}, {meal.Description}");
             return View("CreateMeal", meal);
         }
 
