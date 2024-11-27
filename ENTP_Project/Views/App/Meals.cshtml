@@ -1,13 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model IEnumerable<ENTP_Project.Models.MealModel>
 @{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
-
-    
-    var containers = new List<string> { "Container 1", "Container 2", "Container 3", "Container 4", "Container 5", "Container 6", "Container 7" };
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,13 +106,14 @@
             }
         </div>
         <div class="grid-container">
-            @foreach (var container in containers)
+            @foreach (var meal in Model)
             {
                 <div class="container">
-                    <h1>@container</h1>
+                    <h1>@meal.Title</h1>
                     <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
-                    <h3>Diet: </h3>
-                    <h3>Plan: </h3>
+                    <h3>Created by: </h3>
+                    <h3>Diet: @meal.Diet</h3>
+                    <h3>Plan: @meal.Plan</h3>
                     <div class="buttons">
                         <button style="background-color:deepskyblue; float: left; padding: 12px 24px; font-weight: bold;" class="btn"><i class="fa fa-plus"></i> Add</button>
                         @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")

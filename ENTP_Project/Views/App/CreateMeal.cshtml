@@ -108,10 +108,10 @@
 </head>
 <body>
 
-    <form class="center-content" asp-action="MealModel" method="post">
+    <form class="center-content" asp-action="PostMeal" method="post">
         <div class="section">
-            <h1>Profile Change Form</h1>
-
+            <h1>Meal Creation</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="input">
                 <h2>Meal Title:</h2>
                 <input asp-for="Title" required placeholder="Ex: Spaghetti and Meatballs" />
@@ -150,7 +150,7 @@
                     <option value="Premium">Premium</option>     
                 </select>
             </div>
-            <button type="submit">Submit Request</button>
+            <button type="submit">Create Meal</button>
         </div>
     </form>
 </body>

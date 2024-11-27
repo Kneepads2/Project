@@ -54,13 +54,13 @@
         <p>Here at Super Body Fitness, we offer professionally-developed workouts for all skill levels and healthy meals created by prestigious chefs!</p>
         <p>We are pleased to have you on onboard!</p>      
         <form asp-action="Welcomed" asp-controller="App" method="post">
-            <input type="text" name="Name" value="@Model.Name" />
-            <input type="email" name="Email" value="@Model.Email" />
-            <input type="text" name="Phone" value="@Model.Phone" />
-            <input type="text" name="Role" value="@Model.Role" />
-            <input type="text" name="Diet" value="@Model.Diet" />
-            <input type="text" name="Plan" value="@Model.Plan" />
-            <input type="number" name="Weight" value="@Model.Weight" />
+            <input type="hidden" name="Name" value="@Model.Name" />
+            <input type="hidden" name="Email" value="@Model.Email" />
+            <input type="hidden" name="Phone" value="@Model.Phone" />
+            <input type="hidden" name="Role" value="@Model.Role" />
+            <input type="hidden" name="Diet" value="@Model.Diet" />
+            <input type="hidden" name="Plan" value="@Model.Plan" />
+            <input type="hidden" name="Weight" value="@Model.Weight" />
             <button type="submit" id="button">Continue</button>
         </form>
 </body>

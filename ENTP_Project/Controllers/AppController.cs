@@ -58,10 +58,12 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Meals() //returns Meals view
         {
+            var meals = _context.Meals.ToList();
             DefineAdmin();
-            return View();
+            return View(meals);
         }
 
         public async Task<IActionResult> Profile()
@@ -105,10 +107,28 @@ namespace ENTP_Project.Controllers
         //     return View(users);
         // }
 
+        [HttpGet]
         public IActionResult CreateMeal()
         {
             DefineAdmin();
             return View();
+        }
+
+        [HttpPost("App/CreateMeal")]
+        public async Task<IActionResult> PostMeal(MealModel meal)
+        {
+
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (ModelState.IsValid) {
+                meal.UserId = userCheck.Id;
+                _context.Meals.Add(meal);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Meals", "App");
+            }
+            return View("CreateMeal", meal);
         }
 
         public IActionResult CreateWorkout()
