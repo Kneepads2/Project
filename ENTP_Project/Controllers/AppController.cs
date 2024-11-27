@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using Auth0.ManagementApi.Models;
 using Microsoft.Extensions.Options;
+using System.Numerics;
+using System.Xml.Linq;
 
 //Dylan Tran
 namespace ENTP_Project.Controllers
@@ -61,6 +63,26 @@ namespace ENTP_Project.Controllers
             DefineAdmin();
             return View();
         }
+
+        public async Task<IActionResult> Profile()
+        {
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = new UserModel
+            {
+                Name = userCheck.Name,
+                Email = email,
+                Phone = userCheck.Phone,
+                Role = userCheck.Role,
+                Diet = userCheck.Diet,
+                Plan = userCheck.Plan,
+                Weight = userCheck.Weight,
+            };
+            DefineAdmin();
+            return View(user);
+        }
+
 
        
         public IActionResult ProfileChange() //returns profile change form
