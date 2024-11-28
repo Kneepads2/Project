@@ -52,44 +52,6 @@ namespace ENTP_Project.Controllers
             return new JsonResult(events);
         }
 
-        public IActionResult Workouts()
-        {// returns Workouts view
-            var workouts = _context.Workouts.ToList();
-            DefineAdmin();
-            return View(workouts);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteWorkout(int id)
-        {
-            var workout = await _context.Workouts.FindAsync(id);
-            if (workout != null)
-            {
-                _context.Workouts.Remove(workout);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("Workouts");
-        }
-
-        [HttpGet]
-        public IActionResult Meals() //returns Meals view
-        {
-            var meals = _context.Meals.ToList();
-            DefineAdmin();
-            return View(meals);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteMeal(int id)
-        {
-            var meal = await _context.Meals.FindAsync(id);
-            if (meal != null)
-            {
-                _context.Meals.Remove(meal);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("Meals");
-        }
 
         public async Task<IActionResult> Profile()
         {
@@ -111,11 +73,21 @@ namespace ENTP_Project.Controllers
         }
 
 
-       
-        public IActionResult ProfileChange() //returns profile change form
+        [HttpGet]
+        public IActionResult ProfileChange(int id) //returns profile change form
         {
+            var user = _context.Users.Find(id);
             DefineAdmin();
-            return View();
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(UserModel user)
+        {
+       
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Profile");
         }
 
         public IActionResult Settings() //returns settings view, unfinished
@@ -132,64 +104,6 @@ namespace ENTP_Project.Controllers
         //     return View(users);
         // }
 
-        [HttpGet]
-        public IActionResult CreateMeal()
-        {
-            DefineAdmin();
-            return View();
-        }
-
-        [HttpPost("App/CreateMeal")]
-        public async Task<IActionResult> PostMeal(MealModel meal)
-        {
-            Console.WriteLine("in postmeal");
-            var claims = User.Claims;
-            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
-            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            meal.UserId = userCheck.Id;
-            //if (ModelState.IsValid) {
-                
-            _context.Meals.Add(meal);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Meals", "App");
-            //}
-            Console.WriteLine($"{meal.Title},{meal.Diet}, {meal.ImageUrl}, {meal.UserId}, {meal.Description}");
-            //return View("CreateMeal", meal);
-        }
-
-        [HttpGet]
-        public IActionResult CreateWorkout()
-        {
-            DefineAdmin();
-            return View();
-        }
-
-        [HttpPost("App/CreateWorkout")]
-        public async Task<IActionResult> PostWorkout(WorkoutModel workout)
-        {
-            
-            var claims = User.Claims;
-            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
-            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            workout.UserId = userCheck.Id;
-            
-            _context.Workouts.Add(workout);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Workouts", "App");
-
-        }
-
-        public IActionResult ViewMeal()
-        {
-            DefineAdmin();
-            return View();
-        }
-
-        public IActionResult ViewWorkout()
-        {
-            DefineAdmin();
-            return View();
-        }
 
         public IActionResult Chat()
         {

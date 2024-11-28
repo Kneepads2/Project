@@ -80,7 +80,7 @@
     </head>
     <body>
         
-        <form class="center-content" asp-action="RegistrationModel" method="post">
+        <form class="center-content" asp-action="EditProfile" method="post">
             <div class="section">
                 <h1>Profile Change Form</h1>
                 <div class="input">
@@ -101,7 +101,7 @@
 
                 <div class="input">
                     <h2>Your role: </h2>
-                    <select name="Role" required>                   
+                    <select asp-for="Role" required>                   
                         <option selected="selected" value="User">User</option>
                         <option value="Coach/Trainer">Coach/Trainer</option>
                     </select>
@@ -109,7 +109,7 @@
 
                 <div class="input">
                     <h2>Dietary Restriction: </h2>
-                    <select name="Diet" required>           
+                    <select asp-for="Diet" required>           
                         <option selected="selected" value="None">None</option>
                         <option value="Vegetarian">Vegetarian</option>
                         <option value="Vegan">Vegan</option>

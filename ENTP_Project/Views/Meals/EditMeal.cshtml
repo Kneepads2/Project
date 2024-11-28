@@ -1,16 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
-@model ENTP_Project.Models.WorkoutModel
+@model ENTP_Project.Models.MealModel
 <html>
 <head>
     <style>
         body {
             background-color: rgb(35, 35, 35);
-            background-image: url("https://pyxis.nymag.com/v1/imgs/78d/701/cae23671cda082ca36a23be8ad5f7aba91-adjustable-weights-048-final.rsquare.w700.jpg");
+            background-image: url("@Model.ImageUrl");
             background-size: cover;
         }
 
@@ -112,50 +109,49 @@
 </head>
 <body>
 
-    <form class="center-content" asp-action="PostWorkout" method="post">
+    <form class="center-content" asp-action="EditMeal" method="post">
         <div class="section">
-            <h1>Profile Change Form</h1>
-
+            <h1>Meal Creation</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="input">
-                <h2>Workout Title:</h2>
-                <input asp-for="Title" required placeholder="Ex: Beginner Fitness" />
+                <h2>Meal Title:</h2>
+                <input asp-for="Title" required placeholder="Ex: Spaghetti and Meatballs" />
             </div>
 
             <div class="input">
-                <h2>Workout Difficulty:</h2>
-                <select name="Difficulty" required>
-                    <option selected="selected" value="Easy">Easy</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="Challenging">Challenging</option>
-                    <option value="Difficult">Difficult</option>
-                    <option value="Intense">Intense</option>
+                <h2>Dietary Plan:</h2>
+                <select asp-for="Diet" required>
+                    <option selected="selected" value="None">None</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Halal">Halal</option>
+                    <option value="Kosher">Kosher</option>
+                    <option value="Keto">Keto</option>
+                    <option value="Lactose Intolerant">Lactose Intolerant</option>
+                    <option value="Gluten-free">Gluten-free</option>
+                    <option value="Diabetes Diet">Diabetes Diet</option>
+                    <option value="Low-sodium Diet">Low-sodium Diet</option>
                 </select>
             </div>
 
             <div class="input">
-                <h2>Workout Instructor:</h2>
-                <input asp-for="Instructor" required placeholder="Ex: Don Qui" />
+                <h2>Description:</h2>
+                <textarea class="steps" asp-for="Description" placeholder="Enter nutritional information and ingredients"></textarea>
             </div>
 
             <div class="input">
-                <h2>Workout Steps:</h2>
-                <textarea class="steps" asp-for="Description" placeholder="Enter the instructions and steps for your workout"></textarea>
-            </div>
-
-            <div class="input">
-                <h2>Workout Thumbnail Image:</h2>
+                <h2>Meal Image:</h2>
                 <input asp-for="ImageUrl" required placeholder="Ex: https://example.com/image.png" />
             </div>
 
             <div class="input">
                 <h2>Plan:</h2>
-                <select name="Plan" required>
+                <select asp-for="Plan" required>
                     <option selected="selected" value="Free">Free</option>
                     <option value="Premium">Premium</option>
                 </select>
             </div>
-
-            <button type="submit">Submit Request</button>
+            <button type="submit">Create Meal</button>
         </div>
     </form>
 </body>

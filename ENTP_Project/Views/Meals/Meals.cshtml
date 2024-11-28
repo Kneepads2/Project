@@ -106,7 +106,7 @@
         <div class="button-container">
             @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
             {
-                <a href="/App/CreateMeal" class="create">Create New Meal Plan</a>
+                <a href="/Meals/CreateMeal" class="create">Create New Meal Plan</a>
             }
         </div>
         <div class="grid-container">
@@ -115,21 +115,23 @@
                 <div class="container">
                     <h1>@meal.Title</h1>
                     <img src="@meal.ImageUrl" alt="Workout image" />
-                    <h3>Created by: </h3>
-                    <h3>Dietary Plan: @meal.Diet</h3>
-                    <h3>Plan: @meal.Plan</h3>
+                    <h3><b>Created by: </b></h3>
+                    <h3><b>Dietary Plan: </b>@meal.Diet</h3>
+                    <h3><b>Plan: </b>@meal.Plan</h3>
                     <div class="buttons">
                         <button style="background-color:deepskyblue; float: left; padding: 12px 24px; font-weight: bold;" class="btn"><i class="fa fa-plus"></i> Add</button>
                         @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
                         {
+                            <form method="get" asp-action="EditMeal" asp-route-id="@meal.Id" style="display:inline;">
+                                <button style="background-color: dodgerblue;" class="btn">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </form>
                             <form method="post" asp-action="DeleteMeal" asp-route-id="@meal.Id" style="display: inline;">
                                 <button style="background-color: red;" class="btn" onclick="return confirm('Are you sure you want to delete this meal?');">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                            </form>
-                          
-                            <button style="background-color: dodgerblue;" class="btn"><i class="fa fa-edit"></i></button>
-
+                            </form>                           
                         }
                     </div>
                 </div>
