@@ -117,19 +117,19 @@ namespace ENTP_Project.Controllers
         [HttpPost("App/CreateMeal")]
         public async Task<IActionResult> PostMeal(MealModel meal)
         {
-
+            Console.WriteLine("in postmeal");
             var claims = User.Claims;
             var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (ModelState.IsValid) {
-                meal.UserId = userCheck.Id;
-                _context.Meals.Add(meal);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Meals", "App");
-            }
-            Console.WriteLine($"{meal.Title}, {meal.Diet}, {meal.ImageUrl}, {meal.UserId}, {meal.Description}");
-            return View("CreateMeal", meal);
+            meal.UserId = userCheck.Id;
+            //if (ModelState.IsValid) {
+                
+            _context.Meals.Add(meal);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Meals", "App");
+            //}
+            Console.WriteLine($"{meal.Title},{meal.Diet}, {meal.ImageUrl}, {meal.UserId}, {meal.Description}");
+            //return View("CreateMeal", meal);
         }
 
         public IActionResult CreateWorkout()

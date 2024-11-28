@@ -36,6 +36,8 @@
                 width: 100%; 
                 max-width: 90%; 
                 max-height: 50%; 
+                text-align: center;
+                background-position: center;
                 object-fit: contain; 
                 border-radius: 8px; 
                 margin-top: 10px;
@@ -43,6 +45,7 @@
 
             .container h3 {
                 text-align: left;
+                font-size: 20px;
             }
        
         @@media (max-width: 900px) {
@@ -110,9 +113,9 @@
             {
                 <div class="container">
                     <h1>@meal.Title</h1>
-                    <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
+                    <img src="@meal.ImageUrl" alt="Workout image" />
                     <h3>Created by: </h3>
-                    <h3>Diet: @meal.Diet</h3>
+                    <h3>Dietary Plan: @meal.Diet</h3>
                     <h3>Plan: @meal.Plan</h3>
                     <div class="buttons">
                         <button style="background-color:deepskyblue; float: left; padding: 12px 24px; font-weight: bold;" class="btn"><i class="fa fa-plus"></i> Add</button>

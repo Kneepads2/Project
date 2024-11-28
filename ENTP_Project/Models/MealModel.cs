@@ -15,5 +15,7 @@ namespace ENTP_Project.Models
 
         [ForeignKey("UserId")]
         public UserModel Creator { get; set; }// = context.getuserwhereUserId=UserId
+        //the golden apple that shimmered so brightly turned into a rotting apple that ate my head
+        //
     }
 }
