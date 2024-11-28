@@ -1,10 +1,7 @@
-﻿@{
+﻿@model IEnumerable<ENTP_Project.Models.WorkoutModel>
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
-    
-    // Example data (in a real scenario, this would come from a model)
-    var containers = new List<string> { "Container 1", "Container 2", "Container 3", "Container 4", "Container 5", "Container 6", "Container 7" };
 }
-@model ENTP_Project.Models.UserModel
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,6 +41,7 @@
 
             .container h3 {
                 text-align: left;
+                font-size: 20px;
             }
 
             @@media (max-width: 900px) {
@@ -59,7 +57,7 @@
             }
 
             .create {
-                background-color: rgb(102, 178, 255);
+                background-color: dodgerblue;
                 margin: 20px 20px 0px 20px;
                 font-size: 20px;
                 font-weight: bold;
@@ -72,13 +70,14 @@
             .button-container {
                 text-align: center;
                 display: flex;
-                justify-content: flex-end;     
+                justify-content: flex-end; 
             }
 
             .button-container a {
                 text-decoration: none;
-                color: black;
-                padding: 0px 3px;
+                color: white;
+                font-size: 18px;
+                padding: 2px 10px;
             }
 
             .btn {
@@ -108,19 +107,23 @@
             </div>
             
             <div class="grid-container">
-                @foreach (var container in containers)
+                @foreach (var workout in Model)
                 {
                     <div class="container">
-                        <h1>@container</h1>
-                        <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
-                        <h3>Instructor: </h3>
-                        <h3>Difficulty: </h3>
-                        <h3>Plan: </h3>
+                        <h1>@workout.Title</h1>
+                        <img src="@workout.ImageUrl" alt="Workout image" />
+                        <h3>Instructor: @workout.Instructor</h3>
+                        <h3>Difficulty: @workout.Difficulty</h3>
+                        <h3>Plan: @workout.Plan</h3>
                         <div class="buttons">
                          <button style="background-color:deepskyblue; float: left; padding: 12px 24px; font-weight: bold;" class="btn"><i class="fa fa-plus"></i> Add</button>
                             @if (ViewData["UserRole"]?.ToString() == "Coach/Trainer" || ViewData["UserRole"]?.ToString() == "Admin")
                             {
-                                <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
+                                <form method="post" asp-action="DeleteWorkout" asp-route-id="@workout.Id" style="display: inline;">
+                                    <button style="background-color: red;" class="btn" onclick="return confirm('Are you sure you want to delete this workout?');">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                                 <button style="background-color: dodgerblue;" class="btn"><i class="fa fa-edit"></i></button>
 
                             }

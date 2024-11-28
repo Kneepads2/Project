@@ -54,8 +54,21 @@ namespace ENTP_Project.Controllers
 
         public IActionResult Workouts()
         {// returns Workouts view
+            var workouts = _context.Workouts.ToList();
             DefineAdmin();
-            return View();
+            return View(workouts);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteWorkout(int id)
+        {
+            var workout = await _context.Workouts.FindAsync(id);
+            if (workout != null)
+            {
+                _context.Workouts.Remove(workout);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Workouts");
         }
 
         [HttpGet]
@@ -64,6 +77,18 @@ namespace ENTP_Project.Controllers
             var meals = _context.Meals.ToList();
             DefineAdmin();
             return View(meals);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMeal(int id)
+        {
+            var meal = await _context.Meals.FindAsync(id);
+            if (meal != null)
+            {
+                _context.Meals.Remove(meal);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Meals");
         }
 
         public async Task<IActionResult> Profile()
@@ -132,10 +157,26 @@ namespace ENTP_Project.Controllers
             //return View("CreateMeal", meal);
         }
 
+        [HttpGet]
         public IActionResult CreateWorkout()
         {
             DefineAdmin();
             return View();
+        }
+
+        [HttpPost("App/CreateWorkout")]
+        public async Task<IActionResult> PostWorkout(WorkoutModel workout)
+        {
+            
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            workout.UserId = userCheck.Id;
+            
+            _context.Workouts.Add(workout);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Workouts", "App");
+
         }
 
         public IActionResult ViewMeal()
