@@ -58,7 +58,8 @@ namespace ENTP_Project.Controllers
             var claims = User.Claims;
             var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            var user = new UserModel
+            var user = _context.Users.Find(userCheck.Id);
+            /*var user = new UserModel
             {
                 Name = userCheck.Name,
                 Email = email,
@@ -67,7 +68,7 @@ namespace ENTP_Project.Controllers
                 Diet = userCheck.Diet,
                 Plan = userCheck.Plan,
                 Weight = userCheck.Weight,
-            };
+            }; */
             DefineAdmin();
             return View(user);
         }
@@ -82,9 +83,12 @@ namespace ENTP_Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(UserModel user)
+        public async Task<IActionResult> ProfileChange(UserModel user)
         {
-       
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            
+            user.Email = email;
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Profile");

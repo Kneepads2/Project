@@ -80,7 +80,7 @@
     </head>
     <body>
         
-        <form class="center-content" asp-action="EditProfile" method="post">
+        <form class="center-content" asp-action="ProfileChange" method="post">
             <div class="section">
                 <h1>Profile Change Form</h1>
                 <div class="input">
@@ -95,7 +95,7 @@
 
                 <div class="input">
                     <h2>Your phone number:</h2>
-                    <input asp-for="Phone" required type="tel" pattern="[0-9]{9}" placeholder="Ex: 1234567890" />
+                    <input asp-for="Phone" required type="tel" pattern="+[0-9]{1-2} [0-9]{3}-[0-9]{3]-{0-9}[4]" placeholder="Ex: +1 123-456-7890" />
                 
                 </div>
 
@@ -129,7 +129,14 @@
                     <input asp-for="Weight" required type="number" placeholder="Ex: 180" style="border-width: 0px 0px 1px 0px; border-color: rgb(130,130,130); margin-bottom: 20px;" />
                 </div>
 
-                <p>If you'd like to change your subscription plan, please visit <a href="#">here</a>.</p>
+                <div class="input">
+                    <h2>New subscription plan: </h2>
+                    <select asp-for="Plan" required>
+                        <option selected="selected" value="Free">Free</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+
                 <button type="submit">Submit Request</button>
             </div>
         </form>

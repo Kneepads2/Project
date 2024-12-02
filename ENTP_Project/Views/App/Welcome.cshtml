@@ -11,31 +11,48 @@
         <style>
             body {
                 background-color: rgb(35,35,35);
+            background-image: url("https://images.everydayhealth.com/images/healthy-living/fitness/everything-you-need-know-about-fitness-1440x810.jpg");
+                background-size: cover;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-                color: whitesmoke;
                 text-align: center;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
-                height: 100vh;
-                margin: 0;
+                height: auto;
+                margin: 100px 0px;
             }
 
-            h1 {
+            .center-content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+            }
+
+            .section {
+                padding: 70px;
+                color: black;
+                width: 100%;
+                max-width: 600px;
+                background-color: #f9f9f9;
+                text-align: center;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
+
+            .section h1 {
                 font-size: 30px;
                 font-weight: bold;
-                color: whitesmoke;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
 
-            p {
+            .section p {
                 font-size: 20px;
-                color: whitesmoke;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
 
-            button {
+            .section button {
                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
                 border-radius: 20px;
                 font-size: 20px;
@@ -50,18 +67,23 @@
         </style>
     </head>
     <body>
-        <h1>Welcome!</h1>
-        <p>Here at Super Body Fitness, we offer professionally-developed workouts for all skill levels and healthy meals created by prestigious chefs!</p>
-        <p>We are pleased to have you on onboard!</p>      
-        <form asp-action="Welcomed" asp-controller="App" method="post">
-            <input type="hidden" name="Name" value="@Model.Name" />
-            <input type="hidden" name="Email" value="@Model.Email" />
-            <input type="hidden" name="Phone" value="@Model.Phone" />
-            <input type="hidden" name="Role" value="@Model.Role" />
-            <input type="hidden" name="Diet" value="@Model.Diet" />
-            <input type="hidden" name="Plan" value="@Model.Plan" />
-            <input type="hidden" name="Weight" value="@Model.Weight" />
-            <button type="submit" id="button">Continue</button>
-        </form>
+        <div class="center-content">
+            <div class="section">
+                <h1>Welcome!</h1>
+                <p>Here at <b>Super Body Fitness</b>, we offer professionally-developed workouts for all skill levels and healthy meals created by world-renown chefs!</p>
+                <p>We are pleased to have you onboard our fitness adventure!</p>
+                <form asp-action="Welcomed" asp-controller="App" method="post">
+                    <input type="hidden" name="Name" value="@Model.Name" />
+                    <input type="hidden" name="Email" value="@Model.Email" />
+                    <input type="hidden" name="Phone" value="@Model.Phone" />
+                    <input type="hidden" name="Role" value="@Model.Role" />
+                    <input type="hidden" name="Diet" value="@Model.Diet" />
+                    <input type="hidden" name="Plan" value="@Model.Plan" />
+                    <input type="hidden" name="Weight" value="@Model.Weight" />
+                    <button type="submit" id="button">Continue</button>
+                </form>
+            </div>
+        </div>
+        
 </body>
 </html>
