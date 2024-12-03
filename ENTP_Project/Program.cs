@@ -1,4 +1,5 @@
 using Auth0.AspNetCore.Authentication;
+using ENTP_Project.Hubs;
 using ENTP_Project.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ builder.Services.AddHttpsRedirection(options =>
     options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
     options.HttpsPort = 443;
 });
+
+builder.Services.AddSignalR();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -37,7 +40,6 @@ var app = builder.Build();
     dbContext.Database.EnsureCreated();
 } */
 
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -56,5 +58,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapHub<ChatHub>("/chatHub");
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers();
+});
 
 app.Run();

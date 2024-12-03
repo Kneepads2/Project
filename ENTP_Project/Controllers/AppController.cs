@@ -109,9 +109,13 @@ namespace ENTP_Project.Controllers
         // }
 
 
-        public IActionResult Chat()
+        public async Task<IActionResult> Chat()
         {
-            DefineAdmin();
+            /*var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = _context.Users.Find(userCheck.Id);*/
+            DefineAdmin(); 
             return View();
         }
 
