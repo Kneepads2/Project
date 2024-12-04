@@ -81,6 +81,38 @@ namespace ENTP_Project.Controllers
             return RedirectToAction("Workouts");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddToLibrary(int workoutId)
+        {
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var userId = userCheck.Id;
+            var user = await _context.Users
+                                     .Include(u => u.MyWorkouts)  // Ensure meals are loaded
+                                     .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var workout = await _context.Workouts.FindAsync(workoutId);
+            if (workout == null)
+            {
+                return NotFound("Meal not found");
+            }
+
+            // Check if the meal is already added
+            if (!user.MyWorkouts.Any(m => m.Id == workoutId))
+            {
+                user.MyWorkouts.Add(workout);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(new { message = "Workout added to library!" });
+        }
+
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;

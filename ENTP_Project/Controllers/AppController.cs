@@ -13,6 +13,7 @@ using Auth0.ManagementApi.Models;
 using Microsoft.Extensions.Options;
 using System.Numerics;
 using System.Xml.Linq;
+using Microsoft.AspNet.SignalR;
 
 //Dylan Tran
 namespace ENTP_Project.Controllers
@@ -119,11 +120,29 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
-        public IActionResult MyLibrary()
+        [HttpGet]
+        public async Task<IActionResult> MyLibrary()
         {
-            DefineAdmin();
-            return View();
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var user = await _context.Users
+                                     .Include(u => u.MyMeals)
+                                     .Include(u => u.MyWorkouts)
+                                     .FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return NotFound(); // Handle error if user is not found
+            }
+
+            var viewModel = new ViewModel
+            {
+                MyMeals = user.MyMeals.ToList(),  // Ensure they are fetched
+                MyWorkouts = user.MyWorkouts.ToList()
+            };
+
+            return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult Welcome()

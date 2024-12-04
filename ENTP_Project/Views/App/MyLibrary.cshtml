@@ -1,7 +1,9 @@
-﻿@{
+﻿@model ENTP_Project.Models.ViewModel
+
+@{
     Layout = "~/Views/Shared/_AppLayout.cshtml";
-    var mealContainers = new List<string> { "Vinegar Grapes", "Meatball Hot", "Watermelon Brunch", "Apple Pie Diet" };
-    var workoutContainers = new List<string> { "Walk the Plank", "Egg Shell Beater", "Skull Buster", "Bust a Move" };
+    //var mealContainers = new List<string> { "Vinegar Grapes", "Meatball Hot", "Watermelon Brunch", "Apple Pie Diet" };
+    //var workoutContainers = new List<string> { "Walk the Plank", "Egg Shell Beater", "Skull Buster", "Bust a Move" };
 }
 
 <!DOCTYPE html>
@@ -109,13 +111,13 @@
         
         <div class="grid-container">
            
-            @foreach (var meal in mealContainers)
+            @foreach (var meal in Model.MyMeals)
             {
                 <div class="container meal">
-                    <h1>@meal</h1>
-                    <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Meal image" />
-                    <h3>Diet: </h3>
-                    <h3>Plan: </h3>
+                    <h1>@meal.Title</h1>
+                    <img src="@meal.ImageUrl" alt="Meal image" />
+                    <h3>Diet: @meal.Diet</h3>
+                    <h3>Plan: @meal.Plan</h3>
                     <div class="buttons">
                         <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
                     </div>
@@ -123,14 +125,14 @@
             }
 
             
-            @foreach (var workout in workoutContainers)
+            @foreach (var workout in Model.MyWorkouts)
             {
                 <div class="container workout">
-                    <h1>@workout</h1>
-                    <img src="https://static1.squarespace.com/static/52143a7ae4b0f9bd8308dc73/t/62863150a9e10f302da17e60/1652961616058/Mili+logo_no+back_SQ.png?format=1500w" alt="Workout image" />
-                    <h3>Instructor: </h3>
-                    <h3>Difficulty: </h3>
-                    <h3>Plan: </h3>
+                    <h1>@workout.Title</h1>
+                    <img src="@workout.ImageUrl" alt="Workout image" />
+                    <h3>Instructor: @workout.Instructor</h3>
+                    <h3>Difficulty: @workout.Difficulty</h3>
+                    <h3>Plan: @workout.Plan</h3>
                     <div class="buttons">
                         <button style="background-color: red;" class="btn"><i class="fa fa-trash"></i></button>
                     </div>                  
@@ -140,7 +142,6 @@
     </div>
 
     <script>
-     
         document.querySelectorAll('input[name="viewOption"]').forEach((radio) => {
             radio.addEventListener('change', function () {
                 // Get the selected view

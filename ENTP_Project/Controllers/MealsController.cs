@@ -85,6 +85,33 @@ namespace ENTP_Project.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddMealToLibrary(int mealId)
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var userId = userCheck.Id;
+            var user = await _context.Users
+                                     .Include(u => u.MyMeals)
+                                     .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null)
+            {
+                var meal = await _context.Meals.FindAsync(mealId);
+                if (meal != null && !user.MyMeals.Any(m => m.Id == mealId))
+                {
+                    user.MyMeals.Add(meal);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("MyLibrary");
+        }
+
+
+
+
+
+
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
