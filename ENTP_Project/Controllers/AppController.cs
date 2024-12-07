@@ -60,16 +60,6 @@ namespace ENTP_Project.Controllers
             var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
             var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             var user = _context.Users.Find(userCheck.Id);
-            /*var user = new UserModel
-            {
-                Name = userCheck.Name,
-                Email = email,
-                Phone = userCheck.Phone,
-                Role = userCheck.Role,
-                Diet = userCheck.Diet,
-                Plan = userCheck.Plan,
-                Weight = userCheck.Weight,
-            }; */
             DefineAdmin();
             return View(user);
         }

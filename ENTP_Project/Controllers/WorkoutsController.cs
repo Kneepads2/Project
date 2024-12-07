@@ -63,10 +63,28 @@ namespace ENTP_Project.Controllers
             return RedirectToAction("Workouts");
         }
 
-        public IActionResult ViewWorkout()
+        public async Task<IActionResult> ViewWorkout(int workoutId)
         {
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var userPlan = userCheck.Plan;
+            var userRole = userCheck.Role;
             DefineAdmin();
-            return View();
+            if (userPlan == "Free" && userRole == "User")
+            {
+                return Ok(new { message = "To view this fitness routine, please upgrade your Subscription Plan! This may be accomplished by visiting your profile!" });
+            }
+            else
+            {
+                var workout = _context.Workouts.Find(workoutId);
+                Console.WriteLine(workout);
+                if (workout == null)
+                {
+                    return NotFound();
+                }
+                return View(workout);
+            }
         }
 
         [HttpPost]

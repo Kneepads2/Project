@@ -79,38 +79,63 @@ namespace ENTP_Project.Controllers
             return RedirectToAction("Meals");
         }
 
-        public IActionResult ViewMeal()
+
+        public async Task<IActionResult> ViewMeal(int mealId)
         {
+
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var userPlan = userCheck.Plan;
+            var userRole = userCheck.Role;
             DefineAdmin();
-            return View();
+            if (userPlan == "Free" && userRole == "User")
+            {
+                return Ok(new { message = "To view this fitness routine, please upgrade your Subscription Plan! This may be accomplished by visiting your profile!" });
+            }
+            else
+            {
+                var meal = _context.Meals.Find(mealId);
+                Console.WriteLine(meal);
+                if (meal == null)
+                {
+                    return NotFound();
+                }
+                return View(meal);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMealToLibrary(int mealId)
+        public async Task<IActionResult> AddToLibrary(int mealId)
         {
             var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             var userId = userCheck.Id;
+            
             var user = await _context.Users
-                                     .Include(u => u.MyMeals)
-                                     .FirstOrDefaultAsync(u => u.Id == userId);
+                                    .Include(u => u.MyMeals)  // Ensure meals are loaded
+                                    .FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (user != null)
+            if (user == null)
             {
-                var meal = await _context.Meals.FindAsync(mealId);
-                if (meal != null && !user.MyMeals.Any(m => m.Id == mealId))
-                {
-                    user.MyMeals.Add(meal);
-                    await _context.SaveChangesAsync();
-                }
+                return NotFound("User not found");
             }
-            return RedirectToAction("MyLibrary");
+
+            var meal = await _context.Meals.FindAsync(mealId);
+            if (meal == null)
+            {
+                return NotFound("Meal not found");
+            }
+
+                // Check if the meal is already added
+            if (!user.MyMeals.Any(m => m.Id == mealId))
+            {
+                user.MyMeals.Add(meal);
+                await _context.SaveChangesAsync();
+            }
+
+             return Ok(new { message = "Meal added to library!" });
         }
-
-
-
-
-
 
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 
         {
