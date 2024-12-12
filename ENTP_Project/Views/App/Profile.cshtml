@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             height: auto; 
+            margin: 20px;
         }
 
         .section {
@@ -80,7 +81,7 @@
             <h3><b>Phone:</b>  @Model.Phone</h3>
             <h3><b>Role:</b>  @Model.Role</h3>
             <h3><b>Dietary Restriction:</b>  @Model.Diet</h3>
-            <h3><b>Fitness Plan:</b>  @Model.Plan</h3>
+            <h3><b>Subscription Plan:</b>  @Model.Plan</h3>
             <h3 style="border-width:1px 0px 1px 0px; margin-bottom: 30px;"><b>Weight: </b> @Model.Weight lbs</h3>
             <form method="get" asp-action="ProfileChange" asp-route-id="@Model.Id">
                 <button style="margin:40px;" class="a_link">Edit Profile</button>

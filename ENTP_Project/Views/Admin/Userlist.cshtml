@@ -20,7 +20,7 @@
         }
 
         button:hover {
-            background-color: white;
+            background-color: rgb(35,35,35);
         }
 
         .edit {
@@ -30,12 +30,22 @@
         .delete {
             background-color: red;
         }
+
+        h1 {
+            margin: 25px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 34px;
+            text-decoration: underline;
+        }
+    
     </style>
 </head>
 <h1>User Database</h1>
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -53,6 +63,7 @@
             @foreach (var user in Model)
             {
                 <tr>
+                    <td>@user.Id</td>
                     <td>@user.Name</td>
                     <td>@user.Email</td>
                     <td>@user.Phone</td>
@@ -60,7 +71,11 @@
                     <td>@user.Diet</td>
                     <td>@user.Plan</td>
                     <td>@user.Weight</td>
-                    <td><button class="edit">Edit</button></td>
+                    <td>
+                        <form method="get" asp-controller="App" asp-action="ProfileChange" asp-route-id="@user.Id">
+                            <button class="edit">Edit Profile</button>
+                        </form>
+                    </td>
                     <td>
                         <form asp-action="DeleteUser" method="post">
                             <input type="hidden" name="id" value="@user.Id" />

@@ -31,16 +31,26 @@ namespace ENTP_Project.Controllers
             return View(users);  
         }
 
-        [HttpPost] //delete user
-        public IActionResult DeleteUser(int id)
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == id);
-            if (user != null)
+            var claims = User.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email || c.Type == "email")?.Value;
+            var userCheck = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (id == userCheck.Id)
             {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                return RedirectToAction("Userlist");
             }
-            return RedirectToAction("Userlist");
+            else
+            {
+                var user = await _context.Users.FindAsync(id);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction("Userlist");
+            }            
         }
 
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 

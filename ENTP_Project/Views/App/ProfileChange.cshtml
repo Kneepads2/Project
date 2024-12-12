@@ -13,7 +13,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: auto;         
+                height: auto;    
+                margin: 25px;
             }
 
             input, select {
@@ -76,6 +77,18 @@
                     font-weight: bold;
                 
                 }
+
+            .section .a_link {
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+                font-size: 20px;
+                font-weight: bold;
+                background-color: dodgerblue;
+                color: white;
+                text-decoration: none;
+                border: 1px black;
+                padding: 2px 10px;
+            }
         </style>
     </head>
     <body>
@@ -101,7 +114,10 @@
 
                 <div class="input">
                     <h2>Your role: </h2>
-                    <select asp-for="Role" required>                   
+                    <select asp-for="Role" required>
+                        @if (ViewData["UserRole"]?.ToString() == "Admin"){
+                            <option selected="selected" value="Admin">Admin</option>
+                        }
                         <option selected="selected" value="User">User</option>
                         <option value="Coach/Trainer">Coach/Trainer</option>
                     </select>
@@ -137,7 +153,7 @@
                     </select>
                 </div>
 
-                <button type="submit">Submit Request</button>
+                <button type="submit" class="a_link">Submit Request</button>
             </div>
         </form>
     </body>

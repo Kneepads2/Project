@@ -110,25 +110,26 @@ namespace ENTP_Project.Controllers
                                      .Include(u => u.MyWorkouts)  // Ensure meals are loaded
                                      .FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (user == null)
+            if (workoutId <= 0)
             {
-                return NotFound("User not found");
+                return BadRequest("Invalid workout ID.");
             }
 
             var workout = await _context.Workouts.FindAsync(workoutId);
             if (workout == null)
             {
-                return NotFound("Meal not found");
+                return NotFound("Workout not found.");
             }
 
-            // Check if the meal is already added
-            if (!user.MyWorkouts.Any(m => m.Id == workoutId))
+            if (user.MyWorkouts.Any(w => w.Id == workoutId))
             {
-                user.MyWorkouts.Add(workout);
-                await _context.SaveChangesAsync();
+                return BadRequest("Workout already added.");
             }
 
-            return Ok(new { message = "Workout added to library!" });
+            user.MyWorkouts.Add(workout);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Workout added to your library!" });
         }
 
         private void DefineAdmin() //function to create an admin. Admins gain access to the Admin Panel. 

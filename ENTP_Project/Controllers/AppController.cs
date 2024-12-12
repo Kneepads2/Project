@@ -48,6 +48,10 @@ namespace ENTP_Project.Controllers
             new { title = "Ballet Class", start = "2024-11-01" },
             new { title = "Zoowemama", start = "2024-11-10" },
             new { title = "Urban Nightmare", start = "2024-11-20"},
+            new { title = "First Class", start = "2024-12-10"},
+            new { title = "Cycle", start = "2024-12-13"},
+            new {title = "Party", start = "2024-12-24"},
+            new { title = "Again", start = "2024-12-25"}
         };
 
             return new JsonResult(events);
@@ -82,7 +86,7 @@ namespace ENTP_Project.Controllers
             user.Email = email;
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Profile");
+            return RedirectToAction("Homepage");
         }
 
         public IActionResult Settings() //returns settings view, unfinished
